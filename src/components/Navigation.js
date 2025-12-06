@@ -4,7 +4,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../Firebase/firebaseConfig";
 import { AuthContext } from "../context/AuthContext";
 
-const Navbar = () => {
+const Navigation = () => {
   const { currentUser } = useContext(AuthContext);
   const history = useHistory();
 
@@ -13,7 +13,7 @@ const Navbar = () => {
     history.push("/");
   };
 
-  if (!currentUser) return null; // pas de navbar si pas connecté
+  if (!currentUser) return null; 
 
   return (
     <nav className="navbar">
@@ -23,6 +23,7 @@ const Navbar = () => {
         <Link to="/all-products">Tous les produits</Link>
         <Link to="/filter-products">Filtrer</Link>
         <Link to="/sort-products">Trier</Link>
+        <Link to="/cart">Panier</Link>
         {/* plus tard : <Link to="/cart">Panier</Link> */}
         <button onClick={handleLogout}>Déconnexion</button>
       </div>
@@ -30,4 +31,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navigation;

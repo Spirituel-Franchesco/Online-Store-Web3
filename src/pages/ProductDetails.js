@@ -1,10 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchProductDetails } from "../services/API";
+import { AuthContext } from "../context/AuthContext";
+import {
+  addToCart,
+  getCartItemForUserAndProduct,
+} from "../services/cartService";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const { currentUser } = useContext(AuthContext);
   const [product, setProduct] = useState(null);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     fetchProductDetails(id)
@@ -15,6 +22,39 @@ const ProductDetails = () => {
   if (!product) {
     return <p>Chargement...</p>;
   }
+
+  const handleAddToCart = async () => {
+    if (!currentUser || !product) return;
+
+    setMessage("");
+
+    try {
+      // Vérifier si déjà dans le panier
+      const existing = await getCartItemForUserAndProduct(
+        currentUser.email,
+        product.id
+      );
+
+      if (existing.data.length > 0) {
+        setMessage("Ce produit est déjà dans votre panier.");
+        return;
+      }
+
+      const item = {
+        emailUser: currentUser.email,
+        productId: product.id,
+        title: product.title,
+        price: product.price,
+        image: product.image,
+      };
+
+      await addToCart(item);
+      setMessage("Produit ajouté au panier !");
+    } catch (err) {
+      console.error(err);
+      setMessage("Erreur lors de l'ajout au panier.");
+    }
+  };
 
   return (
     <div className="product-details-page">
@@ -35,7 +75,9 @@ const ProductDetails = () => {
           </p>
           <p>{product.description}</p>
 
-          <button>Ajouter au panier</button>
+          {message && <p>{message}</p>}
+
+          <button onClick={handleAddToCart}>Ajouter au panier</button>
         </div>
       </div>
     </div>

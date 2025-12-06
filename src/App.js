@@ -15,13 +15,13 @@ import ProtectedRoute from "./ProtectedRoute";
 import ProductDetails from "./pages/ProductDetails";
 import FilterProducts from "./pages/FilterProducts";
 import SortProducts from "./pages/SortProducts";
-import Navbar from "./components/Navbar";
+import Navigation from "./components/Navigation";
+import Cart from "./pages/Cart";
 
 const App = () => {
-
   return (
     <Router>
-      <Navbar />
+      <Navigation />
       <Switch>
         <Route exact path="/" component={Login} />
 
@@ -35,10 +35,12 @@ const App = () => {
 
         <ProtectedRoute path="/sort-products" component={SortProducts} />
 
+        <ProtectedRoute path="/cart" component={Cart} />
+
         <Redirect to="/" />
       </Switch>
     </Router>
   );
-}
+};
 
 export default App;
