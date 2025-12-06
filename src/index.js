@@ -1,9 +1,13 @@
 import React from 'react'; 
 import ReactDOM from 'react-dom'; 
 import './styles/index.scss';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from "./context/AuthContext";
+
+
 
 ReactDOM.render(
 <React.StrictMode>

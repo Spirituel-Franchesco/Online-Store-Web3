@@ -18,3 +18,43 @@
   object-fit: contain;
   display: block;
 }
+
+.all-products-page {
+  h2 {
+    margin-bottom: 15px;
+  }
+}
+
+.view-toggle {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+
+  button {
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+  }
+
+  .active {
+    background: $color-1; // ta couleur bleu
+    color: white;
+    border-color: $color-1;
+  }
+}
+
+.products-carousel {
+  .product-card {
+    margin: 10px;
+  }
+}
+
+.list-view .product-card {
+  width: 100%;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
