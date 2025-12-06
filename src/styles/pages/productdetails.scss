@@ -1,0 +1,19 @@
+.product-details-page {
+  margin-top: 20px;
+}
+
+.product-details-content {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.product-details-content img {
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+}
+
+.product-details-info {
+  max-width: 600px;
+}

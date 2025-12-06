@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchAllProducts } from "../services/API";
+import { Link } from "react-router-dom";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -17,14 +18,14 @@ const AllProducts = () => {
       <div className="products-grid">
         {products.map((product) => (
           <div className="product-card" key={product.id}>
-
             <img src={product.image} alt={product.title} />
 
             <h4>{product.title}</h4>
             <p>{product.price} $</p>
 
-            <button>View item</button>
-
+            <Link to={`/product/${product.id}`}>
+              <button>View item</button>
+            </Link>
           </div>
         ))}
       </div>

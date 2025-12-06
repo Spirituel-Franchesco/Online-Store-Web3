@@ -1,0 +1,28 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+
+  .navbar-logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  .navbar-links {
+    display: flex;
+    gap: 10px;
+
+    a, button {
+      padding: 6px 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background: white;
+      cursor: pointer;
+    }
+
+    button {
+      cursor: pointer;
+    }
+  }
+}
