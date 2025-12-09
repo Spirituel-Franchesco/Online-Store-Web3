@@ -1,4 +1,3 @@
-// src/pages/FilterProducts.js
 import React, { useEffect, useState } from "react";
 import {
   fetchAllProducts,

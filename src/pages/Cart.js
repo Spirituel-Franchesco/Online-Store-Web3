@@ -17,7 +17,7 @@ const Cart = () => {
   const handleRemove = async (recordId) => {
     try {
       await removeFromCart(recordId);
-      setCartItems(cartItems.filter((item) => item.id !== recordId));
+      setCartItems((prev) => prev.filter((item) => item.id !== recordId));
     } catch (err) {
       console.error(err);
     }
@@ -25,17 +25,24 @@ const Cart = () => {
 
   return (
     <div className="cart-page">
-      <h2>Votre panier</h2>
+      <h1 className="cart-title">Cart</h1>
 
-      {cartItems.length === 0 && <p>Aucun produit dans votre panier.</p>}
+      {cartItems.length === 0 && (
+        <p className="cart-empty">Aucun produit dans votre panier.</p>
+      )}
 
-      <div className="products-grid">
+      <div className="grid-product">
         {cartItems.map((item) => (
-          <div className="product-card" key={item.id}>
+          <div className="card-product" key={item.id}>
             <img src={item.image} alt={item.title} />
-            <h4>{item.title}</h4>
-            <p>{item.price} $</p>
-            <button onClick={() => handleRemove(item.id)}>
+
+            <h4 className="cart-item-title">{item.title}</h4>
+            <p className="cart-item-price">{item.price} $</p>
+
+            <button
+              className="remove-button"
+              onClick={() => handleRemove(item.id)}
+            >
               Remove from cart
             </button>
           </div>

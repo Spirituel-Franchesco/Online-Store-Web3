@@ -1,6 +1,74 @@
 .cart-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 60px;
+}
+
+.cart-title {
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+.grid-product {
+  display: flex;
+  flex-wrap: wrap; // permet d'avoir 3 par ligne et passer à la ligne
+  justify-content: center;
+  gap: 30px;
+
+  width: 100%;
+  max-width: 1400px; // largeur max pour contrôler l’espace
+}
+
+/* Carte = 3 par ligne */
+.card-product {
+  width: calc(33.33% - 30px); // 3 par ligne avec gap
+  max-width: 380px; // empêche de s’étirer trop
+  min-width: 280px; // évite qu’elles deviennent trop petites
+
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+
+  padding: 30px 20px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-product img {
+  max-width: 240px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 20px;
+}
+
+.cart-item-title {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.cart-item-price {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Bouton rouge */
+.remove-button {
+  margin-top: auto; // reste en bas de la carte
+  padding: 12px 22px;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.remove-button:hover {
+  background-color: #e84345;
 }
