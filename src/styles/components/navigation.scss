@@ -1,28 +1,53 @@
 .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  padding: 10px 40px;
+  border-bottom: 1px solid #eee;
+}
 
-  .navbar-logo {
-    font-weight: bold;
-    font-size: 1.2rem;
-  }
 
-  .navbar-links {
-    display: flex;
-    gap: 10px;
+.navbar-left {
+  display: flex;
+  gap: 20px;
+}
 
-    a, button {
-      padding: 6px 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      background: white;
-      cursor: pointer;
-    }
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-    button {
-      cursor: pointer;
-    }
-  }
+.nav-tab {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 5px 0;
+}
+
+.nav-tab.active {
+  color: #0f9d58; // un vert
+  border-bottom: 2px solid #0f9d58;
+}
+
+.icon-button {
+  border: none;
+  background: transparent;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.logout-button {
+  padding: 6px 16px;
+  border-radius: 6px;
+  border: none;
+  background: #e53935;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
 }

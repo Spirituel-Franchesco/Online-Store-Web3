@@ -1,22 +1,36 @@
+/* Conteneur global */
 .sort-products-page {
-  h2 {
-    margin-bottom: 15px;
-  }
+  padding: 0 60px 40px;
 }
 
-.sort-controls {
-  margin-bottom: 20px;
-  select {
-    padding: 6px 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  button {
-    margin-left: 10px;
-    padding: 6px 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background: white;
-    cursor: pointer;
-  }
+/* Bandeau vert/bleu en haut */
+.sort-banner {
+  background-color: #b9e9df; // même couleur que le reste du site
+  padding: 12px 60px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Radios alignés à droite */
+.sort-radios {
+  display: flex;
+  gap: 30px;
+}
+
+.sort-radios label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+/* Titre centré : "Please select an option" / "Price Low To High" ... */
+.sort-title {
+    text-align: center;
+    margin: 40px 0 20px;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #222;
 }

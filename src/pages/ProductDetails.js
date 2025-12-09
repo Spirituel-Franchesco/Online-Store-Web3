@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { fetchProductDetails } from "../services/API";
 import { AuthContext } from "../context/AuthContext";
 import {
@@ -9,7 +9,9 @@ import {
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const history = useHistory();
   const { currentUser } = useContext(AuthContext);
+
   const [product, setProduct] = useState(null);
   const [message, setMessage] = useState("");
 
@@ -29,7 +31,6 @@ const ProductDetails = () => {
     setMessage("");
 
     try {
-      // Vérifier si déjà dans le panier
       const existing = await getCartItemForUserAndProduct(
         currentUser.email,
         product.id
@@ -58,26 +59,35 @@ const ProductDetails = () => {
 
   return (
     <div className="product-details-page">
-      <h2>{product.title}</h2>
+      {/* lien back en haut à gauche */}
+      <button className="product-back" onClick={() => history.goBack()}>
+        Back
+      </button>
 
       <div className="product-details-content">
-        <img src={product.image} alt={product.title} />
+        {/* IMAGE À GAUCHE */}
+        <div className="product-details-image">
+          <img src={product.image} alt={product.title} />
+        </div>
 
-        <div className="product-details-info">
-          <p>
-            <strong>Prix :</strong> {product.price} $
-          </p>
-          <p>
-            <strong>Catégorie :</strong> {product.category}
-          </p>
-          <p>
-            <strong>Description :</strong>
-          </p>
-          <p>{product.description}</p>
+        {/* PANNEAU BLANC À DROITE */}
+        <div className="product-details-panel">
+          <h1 className="product-title">{product.title}</h1>
 
-          {message && <p>{message}</p>}
+          <p className="product-category">{product.category}</p>
 
-          <button onClick={handleAddToCart}>Ajouter au panier</button>
+          <div className="product-meta-row">
+            <div className="price-box">{product.price} $</div>
+            <div className="rating-box">☆☆☆☆☆</div>
+          </div>
+
+          <p className="product-descriptionn">{product.description}</p>
+
+          {message && <p className="product-message">{message}</p>}
+
+          <button className="add-to-cart-btn" onClick={handleAddToCart}>
+            Add to cart
+          </button>
         </div>
       </div>
     </div>

@@ -6,13 +6,13 @@ import { Link } from "react-router-dom";
 const SortProducts = () => {
   const [products, setProducts] = useState([]);
   const [originalProducts, setOriginalProducts] = useState([]);
-  const [sortOrder, setSortOrder] = useState("none"); // "asc", "desc" ou "none"
+  const [sortOrder, setSortOrder] = useState("none"); // "asc" | "desc" | "none"
 
   useEffect(() => {
     fetchAllProducts()
       .then((res) => {
         setProducts(res.data);
-        setOriginalProducts(res.data); // on garde une copie d'origine
+        setOriginalProducts(res.data);
       })
       .catch((err) => console.error("Error fetching products:", err));
   }, []);
@@ -22,12 +22,11 @@ const SortProducts = () => {
     setSortOrder(value);
 
     if (value === "none") {
-      // revenir à la version originale
       setProducts(originalProducts);
       return;
     }
 
-    const sorted = [...products].sort((a, b) => {
+    const sorted = [...originalProducts].sort((a, b) => {
       if (value === "asc") {
         return a.price - b.price;
       } else {
@@ -38,37 +37,61 @@ const SortProducts = () => {
     setProducts(sorted);
   };
 
-  const handleReset = () => {
-    setSortOrder("none");
-    setProducts(originalProducts);
+  const getTitle = () => {
+    if (sortOrder === "asc") return "Price Low To High";
+    if (sortOrder === "desc") return "Price High To Low";
+    return "Please select an option";
   };
 
   return (
     <div className="sort-products-page">
-      <h2>Trier les produits par prix</h2>
+      {/* Bandeau vert avec radios à droite */}
+      <div className="sort-banner">
+        <div className="sort-radios">
+          <label>
+            <input
+              type="radio"
+              name="price-sort"
+              value="asc"
+              checked={sortOrder === "asc"}
+              onChange={handleSortChange}
+            />
+            Price low to high
+          </label>
 
-      <div className="sort-controls">
-        <select value={sortOrder} onChange={handleSortChange}>
-          <option value="none">Choisir un tri</option>
-          <option value="asc">Prix croissant</option>
-          <option value="desc">Prix décroissant</option>
-        </select>
-
-        <button onClick={handleReset}>Reset</button>
+          <label>
+            <input
+              type="radio"
+              name="price-sort"
+              value="desc"
+              checked={sortOrder === "desc"}
+              onChange={handleSortChange}
+            />
+            Price high to low
+          </label>
+        </div>
       </div>
 
-      <div className="products-grid">
-        {products.map((product) => (
-          <div className="product-card" key={product.id}>
-            <img src={product.image} alt={product.title} />
-            <h4>{product.title}</h4>
-            <p>{product.price} $</p>
-            <Link to={`/product/${product.id}`}>
-              <button>View item</button>
-            </Link>
-          </div>
-        ))}
-      </div>
+      {/* Titre centré */}
+      <h2 className="sort-title">{getTitle()}</h2>
+
+      {/* Produits : seulement si un tri est sélectionné */}
+      {sortOrder !== "none" && (
+        <div className="products-grid">
+          {products.map((product) => (
+            <div className="product-card" key={product.id}>
+              <img src={product.image} alt={product.title} />
+              <h4>{product.title}</h4>
+              <p className="product-price">{product.price} $</p>
+              <p className="product-description">{product.description}</p>
+
+              <Link to={`/product/${product.id}`}>
+                <button className="view-button">View item</button>
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

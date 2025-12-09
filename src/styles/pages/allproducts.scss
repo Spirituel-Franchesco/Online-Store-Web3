@@ -1,60 +1,155 @@
-.products-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+.all-products-page {
+  padding: 30px 60px;
 }
 
+/* ----- CARTES (grid + carousel) ----- */
 .product-card {
-  width: 220px;
+  position: relative;
   padding: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 10px;
   text-align: center;
+  background: #fff;
+
+  display: flex;
+  flex-direction: column; /* IMPORTANT */
+  justify-content: space-between;
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  transition: all 0.2s ease-in-out;
 }
 
 .product-card img {
+  height: 220px;
   width: 100%;
-  height: 150px;
   object-fit: contain;
-  display: block;
+  margin-bottom: 10px;
 }
 
-.all-products-page {
-  h2 {
-    margin-bottom: 15px;
+.product-card h4 {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.product-price {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* description + flou */
+.product-description {
+  position: relative;
+  font-size: 0.85rem;
+  color: #777;
+  margin-top: 6px;
+
+  line-height: 1.4;
+  max-height: calc(1.4em * 3);
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1.4em;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 1)
+    );
   }
 }
 
-.view-toggle {
-  margin-bottom: 15px;
+.view-button {
+  margin-top: 10px;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #b9e9df;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ----- GRID : 4 cartes par ligne ----- */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)); // 4 colonnes fixes
+  gap: 25px;
+}
+
+.products-grid .product-card {
+  height: 100%;
+}
+
+/* ----- CAROUSEL ----- */
+.carousel-wrapper {
+  position: relative;
+  margin-top: 40px;
+}
+
+.carousel-scroll {
   display: flex;
-  gap: 10px;
-
-  button {
-    padding: 6px 12px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background: white;
-    cursor: pointer;
-  }
-
-  .active {
-    background: $color-1; // ta couleur bleu
-    color: white;
-    border-color: $color-1;
-  }
+  gap: 25px;
+  overflow-x: auto;
+  padding: 20px 60px 30px 60px;
+  scroll-behavior: smooth;
 }
 
-.products-carousel {
-  .product-card {
-    margin: 10px;
-  }
+/* largeur des cartes en carousel */
+.carousel-scroll .product-card {
+  flex: 0 0 260px;
 }
 
-.list-view .product-card {
-  width: 100%;
+.carousel-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.carousel-scroll::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+.carousel-scroll::-webkit-scrollbar-thumb {
+  background: #c4c4c4;
+  border-radius: 4px;
+}
+
+/* ----- FLECHES ----- */
+.carousel-arrow {
+  position: absolute;
+  top: 35%;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  width: 38px;
+  height: 50px;
+  border-radius: 6px;
+
+  border: none;
+  background: #222;
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+
   display: flex;
-  gap: 15px;
   align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
+.carousel-arrow.left {
+  left: 20px;
+}
+
+.carousel-arrow.right {
+  right: 20px;
+}
+
+.carousel-arrow:hover {
+  background: #000;
+}

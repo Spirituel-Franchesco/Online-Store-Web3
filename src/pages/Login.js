@@ -6,7 +6,6 @@ import { auth } from "../Firebase/firebaseConfig";
 const Login = () => {
   const history = useHistory();
 
-  // états pour les champs et les erreurs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -17,51 +16,71 @@ const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      // Succès → redirection vers la page des produits
       history.push("/all-products");
     } catch (err) {
       console.error(err);
       setError("Email ou mot de passe invalide.");
+
+      const wantsRegister = window.confirm(
+        "Wrong credentials, Create an account ?"
+      );
+      if (wantsRegister) {
+        history.push("/register");
+      }
     }
   };
 
   return (
     <div className="login-page">
-      <h2>Connexion</h2>
+      <div className="login-logo">
+        <img src={"logo192.png"} alt="Online Store logo" />
+      </div>
 
-      {error && <p className="error-message">{error}</p>}
+      <div className="login-card">
+        <h2>Log In</h2>
 
-      <form onSubmit={handleSubmit} className="login-form">
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+        {error && <p className="login-error">{error}</p>}
 
-        <div>
-          <label>Mot de passe</label>
-          <input
-            type="password"
-            name="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              required
+              value={email}
+              placeholder="Ex: LeSpirituel@gmail.com"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-        <button type="submit">Se connecter</button>
-      </form>
+          <div className="form-group">
+            <label>Mot de passe</label>
+            <input
+              type="password"
+              name="password"
+              required
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-      <p>
-        Pas de compte ? <Link to="/register">Créer un compte</Link>
-      </p>
+          <div className="login-actions">
+            <button type="submit" className="btn btn-primary">
+              Sign in
+            </button>
+
+            <Link to="/register">
+              <button type="button" className="btn btn-secondary">
+                Register
+              </button>
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
-}
+};
 
 export default Login;

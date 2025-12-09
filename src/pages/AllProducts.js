@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { fetchAllProducts } from "../services/API";
-import { Link } from "react-router-dom";
-
-import Slider from "react-slick";
+import { Link, useLocation } from "react-router-dom";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const [viewMode, setViewMode] = useState("grid");
+  const location = useLocation();
+  const carouselRef = useRef(null);
 
   useEffect(() => {
     fetchAllProducts()
@@ -14,56 +14,32 @@ const AllProducts = () => {
       .catch((err) => console.error("Error fetching products:", err));
   }, []);
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4, // nb de produits visibles
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024, // écrans moyens
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 768, // tablettes
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 480, // mobiles
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
+  // lire ?view=grid|carousel
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const view = params.get("view");
+    if (view === "carousel" || view === "grid") {
+      setViewMode(view);
+    } else {
+      setViewMode("grid");
+    }
+  }, [location.search]);
+
+  const scrollCarousel = (direction) => {
+    if (!carouselRef.current) return;
+
+    const scrollAmount = 400; // px à faire défiler
+    const delta = direction === "left" ? -scrollAmount : scrollAmount;
+
+    carouselRef.current.scrollBy({
+      left: delta,
+      behavior: "smooth",
+    });
   };
 
   return (
     <div className="all-products-page">
-      <h2>Tous les produits</h2>
-
-      {/* Boutons pour choisir la vue */}
-      <div className="view-toggle">
-        <button
-          className={viewMode === "grid" ? "active" : ""}
-          onClick={() => setViewMode("grid")}
-        >
-          Vue grille
-        </button>
-
-        <button
-          className={viewMode === "carousel" ? "active" : ""}
-          onClick={() => setViewMode("carousel")}
-        >
-          Vue carrousel
-        </button>
-      </div>
-
-      {/* Vue GRID (flex) */}
+      {/* Vue GRID */}
       {viewMode === "grid" && (
         <div className="products-grid">
           {products.map((product) => (
@@ -71,32 +47,47 @@ const AllProducts = () => {
               <img src={product.image} alt={product.title} />
 
               <h4>{product.title}</h4>
-              <p>{product.price} $</p>
+              <p className="product-price">{product.price} $</p>
+              <p className="product-description">{product.description}</p>
 
               <Link to={`/product/${product.id}`}>
-                <button>View item</button>
+                <button className="view-button">View item</button>
               </Link>
             </div>
           ))}
         </div>
       )}
 
-      {/* Vue CAROUSEL (slider) */}
+      {/* Vue CAROUSEL */}
       {viewMode === "carousel" && (
-        <div className="products-carousel">
-          <Slider {...sliderSettings}>
+        <div className="carousel-wrapper">
+          <button
+            className="carousel-arrow left"
+            onClick={() => scrollCarousel("left")}
+          >
+            &#10094;
+          </button>
+
+          <div className="carousel-scroll" ref={carouselRef}>
             {products.map((product) => (
               <div className="product-card" key={product.id}>
                 <img src={product.image} alt={product.title} />
                 <h4>{product.title}</h4>
-                <p>{product.price} $</p>
-
+                <p className="product-price">{product.price} $</p>
+                <p className="product-description">{product.description}</p>
                 <Link to={`/product/${product.id}`}>
-                  <button>View Item</button>
+                  <button className="view-button">View item</button>
                 </Link>
               </div>
             ))}
-          </Slider>
+          </div>
+
+          <button
+            className="carousel-arrow right"
+            onClick={() => scrollCarousel("right")}
+          >
+            &#10095;
+          </button>
         </div>
       )}
     </div>

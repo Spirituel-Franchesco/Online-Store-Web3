@@ -1,21 +1,45 @@
-.filter-products-page {
-  h2 {
-    margin-bottom: 15px;
-  }
+/* ----- PAGE CATEGORIES (FilterProducts) ----- */
+
+.filter-banner {
+  background-color: #b9e9df;
+  padding: 12px 60px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .filter-controls {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 15px;
+  align-items: center;
+}
 
-  select,
-  button {
-    margin-left: 10px;
-    padding: 6px 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background: white;
-    cursor: pointer;
-  }
+.filter-select {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  min-width: 200px;
+}
+
+.filter-reset {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: none;
+  background: #6c757d;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.filter-reset:hover {
+  background: #5a6268;
+}
+
+.filter-title {
+  text-align: center;
+  margin: 40px 0 25px;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #222;
 }

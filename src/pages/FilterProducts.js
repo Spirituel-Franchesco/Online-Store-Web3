@@ -1,3 +1,4 @@
+// src/pages/FilterProducts.js
 import React, { useEffect, useState } from "react";
 import {
   fetchAllProducts,
@@ -21,6 +22,12 @@ const FilterProducts = () => {
       .catch((err) => console.error("Error fetching products:", err));
   }, []);
 
+  // Met la catégorie affichée en majuscule comme "Electronics", "Jewelery", etc.
+  const formatLabel = (cat) => {
+    if (!cat || cat === "all") return "All Products";
+    return cat.charAt(0).toUpperCase() + cat.slice(1);
+  };
+
   const handleCategoryChange = async (e) => {
     const value = e.target.value;
     setSelectedCat(value);
@@ -42,29 +49,42 @@ const FilterProducts = () => {
 
   return (
     <div className="filter-products-page">
-      <h2>Filtrer les produits par catégorie</h2>
 
-      <div className="filter-controls">
-        <select value={selectedCat} onChange={handleCategoryChange}>
-          <option value="all">Toutes les catégories</option>
-          {categories.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
+      {/* ----- BANDEAU VERT ----- */}
+      <div className="filter-banner">
+        <div className="filter-controls">
+          <select
+            value={selectedCat}
+            onChange={handleCategoryChange}
+            className="filter-select"
+          >
+            <option value="all">Choose a category</option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {formatLabel(cat)}
+              </option>
+            ))}
+          </select>
 
-        <button onClick={handleReset}>Reset</button>
+          <button className="filter-reset" onClick={handleReset}>
+            Reset
+          </button>
+        </div>
       </div>
 
+      {/* ----- TITRE CENTRÉ ----- */}
+      <h2 className="filter-title">{formatLabel(selectedCat)}</h2>
+
+      {/* ----- PRODUITS FILTRÉS ----- */}
       <div className="products-grid">
         {products.map((product) => (
           <div className="product-card" key={product.id}>
             <img src={product.image} alt={product.title} />
             <h4>{product.title}</h4>
-            <p>{product.price} $</p>
+            <p className="product-price">{product.price} $</p>
+            <p className="product-description">{product.description}</p>
             <Link to={`/product/${product.id}`}>
-              <button>View item</button>
+              <button className="view-button">View item</button>
             </Link>
           </div>
         ))}

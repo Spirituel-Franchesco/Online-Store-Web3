@@ -1,4 +1,3 @@
-// src/Pages/Register.js
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -17,52 +16,69 @@ const Register = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      // Succès → soit on connecte direct, soit on renvoie vers login.
       history.push("/all-products");
     } catch (err) {
       console.error(err);
-      setError("Impossible de créer le compte. Vérifie l'email et le mot de passe.");
+      setError(
+        "Impossible de créer le compte. Vérifie l'email et le mot de passe."
+      );
     }
+  };
+
+  const goToLogin = () => {
+    history.push("/");
   };
 
   return (
     <div className="register-page">
-      <h2>Créer un compte</h2>
+      {/* Logo centré */}
+      <div className="register-logo">
+        <img src={"logo192.png"} alt="Online Store Logo" />
+      </div>
 
-      {error && <p className="error-message">{error}</p>}
+      {/* Carte */}
+      <div className="register-card">
+        <h2>Register</h2>
 
-      <form onSubmit={handleSubmit} className="register-form">
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+        {error && <p className="register-error">{error}</p>}
 
-        <div>
-          <label>Mot de passe</label>
-          <input
-            type="password"
-            name="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="register-form">
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              placeholder="Email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-        <button type="submit">S'inscrire</button>
-      </form>
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              placeholder="Password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-      <p>
-        Déjà un compte ?{" "}
-        <Link to="/">Se connecter</Link>
-      </p>
+          {/* Boutons alignés à droite */}
+          <div className="register-actions">
+            <button type="submit" className="btn btn-primary">
+              Register
+            </button>
+
+            <button type="button" className="btn btn-secondary" onClick={goToLogin}>
+              Sign in
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
-}
+};
 
 export default Register;
